@@ -1,4 +1,4 @@
-# BrainDrive MVP Build Primer
+# PAA MVP Build Primer
 
 > Self-contained MVP build plan.
 > This document does not require `mvp-build-plan.md`.
@@ -12,7 +12,7 @@ Historical drift analysis informed this plan, but is already folded into the req
 
 ## What This Build Is
 
-BrainDrive MVP is a terminal-first AI product that runs locally in Docker, uses the architecture foundation as a dependency, and lets the user create folders and produce three owned documents inside each folder: `AGENT.md`, `spec.md`, and `plan.md`.
+PAA MVP is a terminal-first AI product that runs locally in Docker, uses the architecture foundation as a dependency, and lets the user create folders and produce three owned documents inside each folder: `AGENT.md`, `spec.md`, and `plan.md`.
 
 The user interacts through chat only. There is no web UI in MVP. The system must still preserve the architecture boundaries around Memory, Gateway, Engine, Auth, tools, models, and deployment.
 
@@ -66,7 +66,7 @@ Not allowed even in MVP:
 
 - ephemeral-only conversations
 - auth omitted from the real request path
-- config collapsed into one BrainDrive-specific loader
+- config collapsed into one PAA-specific loader
 - best-effort version history
 - approval that exists only as a CLI-local branch and not as contract-visible interaction
 
@@ -89,6 +89,19 @@ The implementation must satisfy these rule families from `docs/ai/compliance-mat
 - `GC-*` Gateway-Engine contract, error taxonomy, approval in contract, auth on path
 
 If a proposed task violates one of these families, the plan must be corrected before coding.
+
+## Primer Governance
+
+These files are part of the implementation authority and must be used during planning, coding, and review:
+
+- `docs/ai/build-sequence.md` for implementation order
+- `docs/ai/primer-audit-playbook.md` for review workflow
+- `docs/ai/traceability-map.md` for mapping matrix rules to primers, checklists, examples, and glossary terms
+- `docs/ai/primer-change-policy.md` for synchronized updates across the primer layer
+- `docs/ai/examples-validation.md` for valid/invalid example maintenance
+- `docs/ai/accepted-mvp-limits.md` for the single source of truth on allowed MVP limits
+
+If this plan, its checklist, or implementation notes diverge from those files, update them before coding proceeds.
 
 ---
 
@@ -119,7 +132,7 @@ Auth
 
 ## Required Conformance Corrections Before Product Work
 
-The previous BrainDrive build drifted because several issues were already present in the foundation/runtime path. Fix these first.
+The previous PAA-adjacent build drifted because several issues were already present in the foundation/runtime path. Fix these first.
 
 ### Engine
 
@@ -135,6 +148,7 @@ The previous BrainDrive build drifted because several issues were already presen
 - use canonical conversation list and item envelopes
 - add `X-Conversation-ID` behavior
 - add `message_id` to the client-facing done event where required
+- implement `approval-request` and `approval-result` as contract-visible client events
 
 ### Auth
 
@@ -152,13 +166,13 @@ The previous BrainDrive build drifted because several issues were already presen
 ### Models / Config
 
 - make adapter selection config-driven
-- remove hardcoded BrainDrive adapter wiring
+- remove hardcoded PAA adapter wiring
 
-Only after these are done should BrainDrive product-specific work begin.
+Only after these are done should PAA product-specific work begin.
 
 ---
 
-## BrainDrive Product Build Requirements
+## PAA Product Build Requirements
 
 ### Bootstrap and Config
 
@@ -175,6 +189,7 @@ Rules:
 - provider details live in adapter config
 - secrets stay in env vars only
 - owner preferences do not get collapsed into runtime bootstrap
+- runtime and adapter config should match `docs/ai/examples/runtime-config.json` and `docs/ai/examples/adapter-config.json`
 
 ### Conversations
 
@@ -247,6 +262,7 @@ Approval interaction choice for MVP:
 - `approval-result` includes the decision outcome and the related request identifier
 - this event pair must be implemented consistently in Gateway, client handling, and verification
 - CLI rendering is only the presentation layer for that interaction, not the source of truth
+- client payloads and event shapes should match the valid example files documented in `docs/ai/examples/README.md`
 
 ### Offline Path
 
@@ -265,6 +281,8 @@ Rules:
 - classify accepted MVP limits
 - map required matrix rules to work items
 - confirm no ambiguity remains between deferred work and mandatory conformance
+- map each major build area to `docs/ai/traceability-map.md`
+- assign a targeted review checklist to each major build area before implementation starts
 
 ### Milestone 1 - Patched Foundation Ready
 
@@ -272,7 +290,7 @@ Rules:
 - offline-capable local model path validated at runtime level
 - patched dependency passes conformance checks
 
-### Milestone 2 - BrainDrive Runtime Skeleton
+### Milestone 2 - PAA Runtime Skeleton
 
 - Docker image ready
 - bootstrap loader implemented
@@ -295,6 +313,7 @@ Rules:
 - primer-only audit explains final code
 - no unexpected drift remains
 - any remaining limitation is explicit and non-breaking
+- examples and checklist references remain aligned with the final implementation
 
 ---
 
@@ -315,6 +334,13 @@ The final build must prove at least these:
 - approval is represented through the contract interaction model
 - localhost-only default bind
 - local-model offline loop works end to end
+
+Verification workflow:
+
+- use `docs/ai/build-sequence.md` to confirm implementation order
+- use `docs/ai/primer-audit-playbook.md` for the primer-only audit procedure
+- use `docs/ai/primer-completeness-test.md` to classify blocked questions as implementation drift or primer failure
+- use `docs/ai/traceability-map.md` to move from matrix rules to checklists, examples, and glossary terms
 
 Manual QA must include:
 
@@ -338,5 +364,6 @@ This build is done only when:
 - the implementation can be built from this document plus `docs/ai/*.md` and `docs/ai/compliance-matrix.md` without consulting `spec/drift-descisions.md`
 - no major unexpected drift remains
 - any remaining limitation is an explicit MVP boundary rather than an accidental architecture miss
+- relevant standalone example files still match the final implementation contracts and config shapes
 
-This is the required standard for a one-shot-oriented, low-drift BrainDrive MVP.
+This is the required standard for a one-shot-oriented, low-drift PAA MVP.

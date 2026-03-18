@@ -1,4 +1,4 @@
-# BrainDrive MVP Primer Checklist
+# PAA MVP Primer Checklist
 
 This checklist is self-contained.
 Use it directly, or alongside `mvp-build-primer.md`.
@@ -6,7 +6,7 @@ It does not require `mvp-build-plan.md`.
 
 ## Build Summary
 
-- Product: terminal-first BrainDrive MVP
+- Product: terminal-first PAA MVP
 - Required runtime: Docker, owner-controlled hardware, localhost Gateway, local-owner-mode Auth
 - Required architecture: persistent Memory-backed conversations, config-driven adapter selection, export, reliable version history, contract-visible approval, structured logging, offline local-model path
 - Not allowed: ephemeral-only conversations, auth-free path, collapsed config, best-effort version history, CLI-only approval semantics
@@ -27,6 +27,9 @@ It does not require `mvp-build-plan.md`.
 ## Milestone 0 - Primer Lock
 
 - [ ] Treat `docs/ai/*.md` and `docs/ai/compliance-matrix.md` as build authority
+- [ ] Read `docs/ai/build-sequence.md` before implementation starts
+- [ ] Read `docs/ai/accepted-mvp-limits.md` before classifying scope cuts
+- [ ] Use `docs/ai/traceability-map.md` to map each work area to its matrix rules, examples, and checklist
 - [ ] Mark every accepted MVP limitation explicitly
 - [ ] Confirm no accepted limitation violates a non-negotiable matrix rule
 
@@ -45,6 +48,7 @@ It does not require `mvp-build-plan.md`.
 - [ ] Use canonical conversation item envelope
 - [ ] Add `X-Conversation-ID` response header
 - [ ] Attach `message_id` to client-facing done event if owned here
+- [ ] Implement `approval-request` and `approval-result` as contract-visible events
 
 ### Auth
 - [ ] Wire `authorize()` into tool execution path
@@ -61,7 +65,7 @@ It does not require `mvp-build-plan.md`.
 
 ### Models / Config
 - [ ] Make adapter selection config-driven
-- [ ] Remove hardcoded BrainDrive adapter wiring
+- [ ] Remove hardcoded PAA adapter wiring
 
 ### Foundation Validation
 - [ ] Validate engine completion semantics
@@ -72,13 +76,14 @@ It does not require `mvp-build-plan.md`.
 - [ ] Validate tool isolation beyond prompt behavior
 - [ ] Validate offline local-model path
 
-## Milestone 2 - BrainDrive Runtime Skeleton
+## Milestone 2 - PAA Runtime Skeleton
 
 ### Bootstrap / Config
 - [ ] Implement runtime config fields: `memory_root`, `provider_adapter`, `auth_mode`, `tool_sources`, `bind_address`
 - [ ] Keep provider details in adapter config
 - [ ] Keep secrets in env vars only
 - [ ] Default `bind_address` to `127.0.0.1`
+- [ ] Match config shapes to `docs/ai/examples/runtime-config.json` and `docs/ai/examples/adapter-config.json`
 
 ### Conversations
 - [ ] Persist conversations in Memory from day one
@@ -108,6 +113,7 @@ It does not require `mvp-build-plan.md`.
 - [ ] Add structured JSON stdout logging
 - [ ] Make git/version history a startup requirement
 - [ ] Keep CLI on canonical route and stream contract
+- [ ] Match client payload and event shapes to the valid files documented in `docs/ai/examples/README.md`
 
 ## Milestone 4 - Verification
 
@@ -126,6 +132,25 @@ It does not require `mvp-build-plan.md`.
 - [ ] `D-02` offline local-model loop works
 - [ ] `D-03` localhost-only default bind
 
+### Primer Governance Gates
+- [ ] `docs/ai/primer-audit-playbook.md` is the procedure used for the final audit
+- [ ] `docs/ai/primer-completeness-test.md` is run and any blocked question is recorded explicitly
+- [ ] `docs/ai/examples-validation.md` is respected for any contract or config change during implementation
+- [ ] `docs/ai/traceability-map.md` is used to trace major conformance claims and findings back to primer support
+
+### Startup-Readiness Gates
+- [ ] `D-05` startup fails clearly if version history cannot be established
+- [ ] `D-06` startup loads runtime config, adapter config, tools, Memory, and preferences in deterministic order
+- [ ] `D-07` export surface and conversation persistence path are available from day one
+
+### Focused Review Gates
+- [ ] Use `docs/ai/review-checklists/gateway-review.md` for Gateway and client-contract review
+- [ ] Use `docs/ai/review-checklists/memory-review.md` for Memory/export/history review
+- [ ] Use `docs/ai/review-checklists/auth-review.md` for Auth boundary review
+- [ ] Use `docs/ai/review-checklists/configuration-review.md` for config and startup-readiness review
+- [ ] Use `docs/ai/review-checklists/engine-review.md` for Engine and internal contract review
+- [ ] Use `docs/ai/review-checklists/security-review.md` for security, approval, and tool-boundary review
+
 ### Manual QA
 - [ ] Fresh library boot initializes git or fails clearly
 - [ ] Conversation persists to disk in Memory
@@ -142,3 +167,4 @@ It does not require `mvp-build-plan.md`.
 - [ ] Primer-only audit can explain the final code without falling back to full human docs
 - [ ] No unexpected drift remains
 - [ ] Any remaining limitation is explicitly accepted and non-breaking
+- [ ] Relevant standalone example files still match the final implementation contracts and config shapes
