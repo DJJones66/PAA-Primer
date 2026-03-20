@@ -1,0 +1,63 @@
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Editor and IDE files
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.iml
+*.suo
+*.user
+*.userossc
+*.sln.docstates
+*.swp
+*.swo
+*~
+
+# Node.js / TypeScript
+**/node_modules/
+**/dist/
+**/coverage/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Package manager caches
+.npm/
+.pnpm-store/
+.yarn/*
+!.yarn/patches/
+!.yarn/plugins/
+!.yarn/releases/
+!.yarn/sdks/
+!.yarn/versions/
+
+# Environment and local overrides
+.env
+.env.*
+!.env.example
+*.local
+
+# Tool caches and temp files
+.cache/
+.eslintcache
+.vitest/
+tmp/
+temp/
+*.log
+
+# Python helpers (used in docs/examples tooling)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Project runtime data (builds/typescript)
+builds/typescript/your-memory/conversations/
+builds/typescript/your-memory/preferences/auth-state.json
+builds/typescript/your-memory/exports/*.tar.gz

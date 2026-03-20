@@ -1,0 +1,13 @@
+{
+  "memory_root": "./your-memory",
+  "provider_adapter": "openai-compatible",
+  "conversation_store": "markdown",
+  "auth_mode": "local-owner",
+  "tool_sources": [
+    "memory-tools/file-ops/server.ts",
+    "builtin/auth-tools",
+    "builtin/memory-tools",
+    "builtin/project-tools"
+  ],
+  "bind_address": "0.0.0.0"
+}
