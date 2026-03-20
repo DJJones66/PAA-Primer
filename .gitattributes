@@ -1,0 +1,6 @@
+# Keep repository text files normalized to LF across Windows/WSL/macOS/Linux.
+* text=auto eol=lf
+
+# Windows command scripts should remain CRLF for cmd.exe compatibility.
+*.bat text eol=crlf
+*.cmd text eol=crlf
