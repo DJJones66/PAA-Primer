@@ -59,3 +59,6 @@ venv/
 
 # Project runtime data (builds/typescript)
 builds/typescript/your-memory/
+
+# local designs
+designs/
