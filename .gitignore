@@ -58,6 +58,4 @@ __pycache__/
 venv/
 
 # Project runtime data (builds/typescript)
-builds/typescript/your-memory/conversations/
-builds/typescript/your-memory/preferences/auth-state.json
-builds/typescript/your-memory/exports/*.tar.gz
+builds/typescript/your-memory/
